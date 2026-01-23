@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tenant extends Model
+class Warehouse extends Model
 {
-    protected $fillable = [
+   protected $fillable = [
         'name',
         'email',
         'contact',

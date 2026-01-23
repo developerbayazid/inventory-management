@@ -52,18 +52,18 @@ class User extends Authenticatable implements HasTenants
         ];
     }
 
-     public function tenants(): BelongsToMany
+    public function warehouses(): BelongsToMany
     {
-        return $this->belongsToMany(Tenant::class);
+        return $this->belongsToMany(Warehouse::class);
     }
 
     public function getTenants(Panel $panel): Collection
     {
-        return $this->tenants;
+        return $this->warehouses;
     }
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $this->tenants()->whereKey($tenant)->exists();
+        return $this->warehouses()->whereKey($tenant)->exists();
     }
 }

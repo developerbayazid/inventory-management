@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\TenantManager\Resources\Tenants\Schemas;
+namespace App\Filament\SuperAdmin\Resources\Warehouses\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class TenantForm
+class WarehouseForm
 {
     public static function configure(Schema $schema): Schema
     {

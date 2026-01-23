@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,19 +24,21 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $user = User::create([
-        'name' => 'Bayazid Hasan',
-        'email' => 'admin@bayazid.com',
-        'password' => bcrypt('bayazid'),
-        ]);
-
-        $tenant = Tenant::create([
-            'name' => 'Default Tenant',
-            'email' => 'default@tenant.com',
+        $warehouse = Warehouse::create([
+            'name' => 'Default Warehouse',
+            'email' => 'default@warehouse.com',
             'contact' => '0123456789',
         ]);
 
-        $tenant->users()->attach($user);
+        $user = User::create([
+            'name' => 'Bayazid Hasan',
+            'email' => 'admin@bayazid.com',
+            'password' => bcrypt('bayazid'),
+        ]);
+
+
+
+        $warehouse->users()->attach($user);
 
     }
 

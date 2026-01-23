@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Models\Tenant;
+use App\Models\Warehouse;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -53,9 +54,11 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->tenant(Tenant::class)
+            ->tenant(Warehouse::class)
+            ->spa()
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
     }
 }
