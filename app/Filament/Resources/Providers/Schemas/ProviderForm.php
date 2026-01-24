@@ -16,6 +16,7 @@ class ProviderForm
                 //     ->required()
                 //     ->numeric(),
                 TextInput::make('name')
+                    ->label('Provider Name')
                     ->required(),
                 TextInput::make('email')
                     ->label('Email address')
@@ -24,7 +25,8 @@ class ProviderForm
                     ->tel()
                     ->required(),
                 TextInput::make('address'),
-                KeyValue::make('data'),
+                KeyValue::make('data')
+                    ->columnSpanFull(),
             ]);
     }
 }

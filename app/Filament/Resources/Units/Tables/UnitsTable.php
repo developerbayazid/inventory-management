@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Providers\Tables;
+namespace App\Filament\Resources\Units\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProvidersTable
+class UnitsTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,14 +18,10 @@ class ProvidersTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
-                    ->label('Provider Name')
+                    ->label('Unit Name')
                     ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('address')
+                TextColumn::make('key')
+                    ->label('Unit Key')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

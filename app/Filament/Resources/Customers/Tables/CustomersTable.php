@@ -14,10 +14,11 @@ class CustomersTable
     {
         return $table
             ->columns([
-                TextColumn::make('warehouse_id')
+                TextColumn::make('warehouse.name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->label('Customer Name')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')

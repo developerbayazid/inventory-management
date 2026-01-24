@@ -24,24 +24,27 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $warehouse = Warehouse::create([
-            'name' => 'Default Warehouse',
-            'email' => 'default@warehouse.com',
-            'contact' => '0123456789',
-        ]);
-
         $user = User::create([
             'name' => 'Bayazid Hasan',
             'email' => 'admin@bayazid.com',
             'password' => bcrypt('bayazid'),
         ]);
 
+        $test = User::create([
+            'name' => 'Test User',
+            'email' => 'test@test.com',
+            'password' => bcrypt('test'),
+        ]);
 
+        $warehouse = Warehouse::create([
+            'name' => 'Default Warehouse',
+            'email' => 'default@warehouse.com',
+            'contact' => '0123456789',
+        ]);
 
         $warehouse->users()->attach($user);
+        $warehouse->users()->attach($test);
 
     }
-
-
 
 }

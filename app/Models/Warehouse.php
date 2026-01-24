@@ -32,4 +32,19 @@ class Warehouse extends Model
     {
         return $this->hasMany(Customer::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

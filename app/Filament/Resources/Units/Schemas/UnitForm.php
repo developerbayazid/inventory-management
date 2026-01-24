@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Customers\Schemas;
+namespace App\Filament\Resources\Units\Schemas;
 
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class CustomerForm
+class UnitForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -16,15 +16,16 @@ class CustomerForm
                 //     ->required()
                 //     ->numeric(),
                 TextInput::make('name')
-                    ->label('Customer Name')
-                    ->required(),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email(),
-                TextInput::make('phone')
-                    ->tel()
-                    ->required(),
-                TextInput::make('address'),
+                    ->required()
+                    ->label('Unit Name')
+                    ->helperText('e.g., Kilogram, Liter, Piece')
+                    ->columnSpanFull(),
+                TextInput::make('key')
+                    ->required()
+                    ->helperText('e.g., kg, l, pc')
+                    ->label('Unit Key')
+                    ->unique(ignoreRecord: true)
+                    ->columnSpanFull(),
                 KeyValue::make('data')
                     ->columnSpanFull(),
             ]);

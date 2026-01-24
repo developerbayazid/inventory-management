@@ -27,6 +27,7 @@ class SuperAdminPanelProvider extends PanelProvider
             ->id('superAdmin')
             ->path('super-admin')
             ->login()
+            ->brandName('Inventory Management')
             ->colors([
                 'primary' => Color::Green,
             ])
