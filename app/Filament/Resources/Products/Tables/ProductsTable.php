@@ -34,12 +34,12 @@ class ProductsTable
                 TextColumn::make('safety_stock')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('unit.name')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('expiry_date')
-                    ->date()
-                    ->sortable(),
+                // TextColumn::make('unit.name')
+                //     ->numeric()
+                //     ->sortable(),
+                // TextColumn::make('expiry_date')
+                //     ->date()
+                //     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
