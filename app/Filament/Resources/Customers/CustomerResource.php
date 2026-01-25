@@ -19,7 +19,7 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static string | UnitEnum | null $navigationGroup = 'CRM';
+    protected static string | UnitEnum | null $navigationGroup = 'Sales';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

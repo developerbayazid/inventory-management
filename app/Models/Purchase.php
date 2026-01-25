@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Provider extends Model
+class Purchase extends Model
 {
     protected $guarded = [];
+
     protected $casts = [
         'data' => 'array', // automatically converts array <-> JSON
     ];
@@ -16,8 +17,13 @@ class Provider extends Model
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function purchases()
+    public function provider()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->belongsTo(Provider::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(PurchaseProduct::class);
     }
 }
