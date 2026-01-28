@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Purchases\Schemas;
 
+use App\Filament\Resources\Customers\CustomerResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Unit;
+use App\Models\Warehouse;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
@@ -28,7 +30,12 @@ class PurchaseForm
                     ->components([
                         Select::make('provider_id')
                             ->required()
-                            ->relationship('provider', 'name'),
+                            ->relationship('provider', 'name')
+                            ->createOptionForm(function (Schema $schema) {
+                                return $schema
+                                    ->columns(1)
+                                    ->components(CustomerResource::getCustomerSchema());
+                                }),
                         TextInput::make('invoice_number')
                             ->required(),
                         DatePicker::make('purchase_date')
@@ -38,10 +45,11 @@ class PurchaseForm
                 Section::make('Product Details')
                         ->components([
                             Repeater::make('product')
-                                ->label('Product')
+                                ->label('Products')
                                 ->columns(4)
                                 ->components([
                                     Select::make('product_id')
+                                        ->label('Product')
                                         ->required()
                                         ->options(function () {
                                             return Product::pluck('name', 'id')->toArray();
@@ -58,10 +66,15 @@ class PurchaseForm
                                                         ->options(function () {
                                                             return Category::pluck('name', 'id')->toArray();
                                                         })
+                                                        ->label('select Category')
                                                         ->required(),
                                                     TextInput::make('sku')
                                                         ->label('Product Code')
-                                                        ->unique(ignoreRecord: true)
+                                                        ->unique(
+                                                            table: 'products',
+                                                            column: 'sku',
+                                                            ignoreRecord: true
+                                                        )
                                                         ->helperText('Unique identifier for this product.')
                                                         ->required(),
                                                     TextInput::make('quantity')
@@ -79,13 +92,16 @@ class PurchaseForm
                                                         ->helperText('Safety stock level to trigger restocking')
                                                         ->default(0),
                                                     Select::make('unit_id')
+                                                        ->label('Select Unit')
                                                         ->options(function () {
                                                             return Unit::pluck('name', 'id')->toArray();
                                                         })
                                                         ->required(),
-                                            ]);
+                                                ]);
+
 
                                         }),
+
                                         TextInput::make('price')
                                             ->required()
                                             ->numeric()
@@ -117,6 +133,8 @@ class PurchaseForm
                                             ->disabled(),
 
                                     ]),
+
+
                     ]),
             ]);
     }

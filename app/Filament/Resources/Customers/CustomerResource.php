@@ -9,6 +9,8 @@ use App\Filament\Resources\Customers\Schemas\CustomerForm;
 use App\Filament\Resources\Customers\Tables\CustomersTable;
 use App\Models\Customer;
 use BackedEnum;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -48,6 +50,24 @@ class CustomerResource extends Resource
             'index' => ListCustomers::route('/'),
             'create' => CreateCustomer::route('/create'),
             'edit' => EditCustomer::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getCustomerSchema()
+    {
+        return [
+            TextInput::make('name')
+                ->label('Name')
+                ->required(),
+            TextInput::make('email')
+                ->label('Email address')
+                ->email(),
+            TextInput::make('phone')
+                ->tel()
+                ->required(),
+            TextInput::make('address'),
+            KeyValue::make('data')
+                ->columnSpanFull(),
         ];
     }
 }
