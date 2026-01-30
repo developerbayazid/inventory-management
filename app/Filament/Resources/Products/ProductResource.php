@@ -7,7 +7,9 @@ use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
 use App\Filament\Resources\Products\Schemas\ProductForm;
 use App\Filament\Resources\Products\Tables\ProductsTable;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Unit;
 use BackedEnum;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\KeyValue;
@@ -64,10 +66,16 @@ class ProductResource extends Resource
                     ->required(),
                 Select::make('category_id')
                     ->required()
-                    ->relationship('category', 'name'),
+                    ->options(function () {
+                        return Category::pluck('name', 'id')->toArray();
+                    }),
                 TextInput::make('sku')
                     ->label('Product Code')
-                    ->unique(ignoreRecord: true)
+                    ->unique(
+                        table: Product::class,
+                        column: 'sku',
+                        ignoreRecord: true
+                    )
                     ->helperText('Unique identifier for this product.')
                     ->required(),
                 TextInput::make('quantity')
@@ -88,7 +96,9 @@ class ProductResource extends Resource
                     ->columnSpanFull(),
                 Select::make('unit_id')
                     ->required()
-                    ->relationship('unit', 'name'),
+                    ->options(function () {
+                        return Unit::pluck('name', 'id')->toArray();
+                    }),
                 DatePicker::make('expiry_date'),
                 KeyValue::make('data')
                     ->columnSpanFull(),

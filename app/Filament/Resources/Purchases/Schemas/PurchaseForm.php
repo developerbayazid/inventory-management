@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Purchases\Schemas;
 
 use App\Filament\Resources\Customers\CustomerResource;
+use App\Filament\Resources\Products\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Unit;
@@ -58,48 +59,11 @@ class PurchaseForm
                                         ->createOptionForm(function (Schema $schema) {
                                             return $schema
                                                 ->columns(1)
-                                                ->components([
-                                                    TextInput::make('name')
-                                                    ->label('Product Name')
-                                                    ->required(),
-                                                    Select::make('category_id')
-                                                        ->options(function () {
-                                                            return Category::pluck('name', 'id')->toArray();
-                                                        })
-                                                        ->label('select Category')
-                                                        ->required(),
-                                                    TextInput::make('sku')
-                                                        ->label('Product Code')
-                                                        ->unique(
-                                                            table: 'products',
-                                                            column: 'sku',
-                                                            ignoreRecord: true
-                                                        )
-                                                        ->helperText('Unique identifier for this product.')
-                                                        ->required(),
-                                                    TextInput::make('quantity')
-                                                        ->required()
-                                                        ->numeric()
-                                                        ->default(1.0),
-                                                    TextInput::make('price')
-                                                        ->required()
-                                                        ->numeric()
-                                                        ->default(0.0)
-                                                        ->prefix('$'),
-                                                    TextInput::make('safety_stock')
-                                                        ->required()
-                                                        ->numeric()
-                                                        ->helperText('Safety stock level to trigger restocking')
-                                                        ->default(0),
-                                                    Select::make('unit_id')
-                                                        ->label('Select Unit')
-                                                        ->options(function () {
-                                                            return Unit::pluck('name', 'id')->toArray();
-                                                        })
-                                                        ->required(),
-                                                ]);
+                                                ->components(ProductResource::getProductSchema());
 
-
+                                        })
+                                        ->createOptionUsing(function(array $data){
+                                            return Product::create($data)->id;
                                         }),
 
                                         TextInput::make('price')
