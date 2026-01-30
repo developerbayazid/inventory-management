@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Purchases\Schemas;
 
 use App\Filament\Resources\Customers\CustomerResource;
 use App\Filament\Resources\Products\ProductResource;
+use App\Filament\Resources\Purchases\PurchaseResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Unit;
@@ -72,23 +73,13 @@ class PurchaseForm
                                             ->default(0.0)
                                             ->prefix('$')
                                             ->reactive()
-                                            ->afterStateUpdated(function(callable $get, callable $set) {
-                                                $price = $get('price') ?? 0;
-                                                $quantity = $get('quantity') ?? 1;
-                                                $total = $quantity * $price;
-                                                $set('total', $total);
-                                            }),
+                                            ->afterStateUpdated(fn(callable $get, callable $set) => PurchaseResource::updateFormData($get, $set)),
                                         TextInput::make('quantity')
                                             ->required()
                                             ->numeric()
                                             ->default(1.0)
                                             ->reactive()
-                                            ->afterStateUpdated(function(callable $get, callable $set) {
-                                                $price = $get('price') ?? 0;
-                                                $quantity = $get('quantity') ?? 1;
-                                                $total = $quantity * $price;
-                                                $set('total', $total);
-                                            }),
+                                           ->afterStateUpdated(fn(callable $get, callable $set) => PurchaseResource::updateFormData($get, $set)),
                                         TextInput::make('total')
                                             ->required()
                                             ->numeric()
@@ -100,6 +91,32 @@ class PurchaseForm
 
 
                     ]),
+
+                    Section::make()
+                        ->heading('Total Details')
+                        ->columns(3)
+                        ->components([
+                            TextInput::make('total_amount')
+                                ->required()
+                                ->disabled()
+                                ->label('Sub Total'),
+                            TextInput::make('discount')
+                                ->required()
+                                ->label('Discount')
+                                ->default(0)
+                                ->prefix('$')
+                                ->reactive()
+                                ->afterStateUpdated(function($get, $set){
+                                    $sub_total = $get('total_amount') ?? 0;
+                                    $discount  = $get('discount') ?? 0;
+                                    $set('net_total', $sub_total - $discount);
+                                }),
+                            TextInput::make('net_total')
+                                ->label('Total')
+                                ->disabled()
+                                ->required(),
+                        ])
+
             ]);
     }
 }

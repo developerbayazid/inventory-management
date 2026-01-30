@@ -50,4 +50,30 @@ class PurchaseResource extends Resource
             'edit' => EditPurchase::route('/{record}/edit'),
         ];
     }
+
+    public static function updateFormData($get, $set)
+    {
+        $formData = $get('../../');
+        $products = $formData['product'] ?? [];
+
+        $grandTotal = 0;
+
+        foreach ($products as $product)
+        {
+            $price      =  $product['price'] ?? 0;
+            $quantity   =  $product['quantity'] ?? 1;
+            $total      =  $price * $quantity;
+            $grandTotal += $total;
+        }
+
+
+        $price    = $get('price') ?? 0;
+        $quantity = $get('quantity') ?? 1;
+        $total    = $quantity * $price;
+        $set('total', $total);
+        $set('../../total_amount', $grandTotal);
+        $discount = $get('discount');
+        $set('../../net_total', $grandTotal - $discount);
+
+    }
 }
