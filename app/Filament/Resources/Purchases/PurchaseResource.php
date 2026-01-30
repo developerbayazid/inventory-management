@@ -51,29 +51,27 @@ class PurchaseResource extends Resource
         ];
     }
 
-    public static function updateFormData($get, $set)
+    public static function updateFormData($livewire)
     {
-        $formData = $get('../../');
-        $products = $formData['product'] ?? [];
+
+        $products = $livewire->data['product'];
 
         $grandTotal = 0;
 
-        foreach ($products as $product)
-        {
-            $price      =  $product['price'] ?? 0;
-            $quantity   =  $product['quantity'] ?? 1;
-            $total      =  $price * $quantity;
-            $grandTotal += $total;
+        foreach ($products as $key=>$product) {
+            $price            = $product['price'] ?? 0;
+            $quantity         = $product['quantity'] ?? 1;
+            $total            = $price * $quantity;
+            $product['total'] = $total;
+            $grandTotal       += $total;
+            $products[$key] = $product;
         }
 
-
-        $price    = $get('price') ?? 0;
-        $quantity = $get('quantity') ?? 1;
-        $total    = $quantity * $price;
-        $set('total', $total);
-        $set('../../total_amount', $grandTotal);
-        $discount = $get('discount');
-        $set('../../net_total', $grandTotal - $discount);
+        $livewire->data['product'] = $products;
+        $livewire->data['total_amount'] = $grandTotal;
+        $discount = $livewire->data['discount'] ?? 0;
+        $netTotal = $grandTotal - $discount;
+        $livewire->data['net_total'] = $netTotal;
 
     }
 }

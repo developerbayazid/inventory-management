@@ -17,6 +17,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Component as Livewire;
 
 use function Pest\Laravel\options;
 
@@ -49,6 +50,8 @@ class PurchaseForm
                             Repeater::make('product')
                                 ->label('Products')
                                 ->columns(4)
+                                ->cloneable()
+                                ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire))
                                 ->components([
                                     Select::make('product_id')
                                         ->label('Product')
@@ -73,13 +76,13 @@ class PurchaseForm
                                             ->default(0.0)
                                             ->prefix('$')
                                             ->reactive()
-                                            ->afterStateUpdated(fn(callable $get, callable $set) => PurchaseResource::updateFormData($get, $set)),
+                                            ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire)),
                                         TextInput::make('quantity')
                                             ->required()
                                             ->numeric()
                                             ->default(1.0)
                                             ->reactive()
-                                           ->afterStateUpdated(fn(callable $get, callable $set) => PurchaseResource::updateFormData($get, $set)),
+                                           ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire)),
                                         TextInput::make('total')
                                             ->required()
                                             ->numeric()
