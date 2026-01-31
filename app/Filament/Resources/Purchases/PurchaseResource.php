@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Purchases;
 use App\Filament\Resources\Purchases\Pages\CreatePurchase;
 use App\Filament\Resources\Purchases\Pages\EditPurchase;
 use App\Filament\Resources\Purchases\Pages\ListPurchases;
+use App\Filament\Resources\Purchases\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\Purchases\Schemas\PurchaseForm;
 use App\Filament\Resources\Purchases\Tables\PurchasesTable;
 use App\Models\Purchase;
@@ -38,7 +39,7 @@ class PurchaseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ProductsRelationManager::make()
         ];
     }
 
@@ -68,7 +69,7 @@ class PurchaseResource extends Resource
         }
 
         $livewire->data['product'] = $products;
-        $livewire->data['total_amount'] = $grandTotal;
+        $livewire->data['total'] = $grandTotal;
         $discount = $livewire->data['discount'] ?? 0;
         $netTotal = $grandTotal - $discount;
         $livewire->data['net_total'] = $netTotal;

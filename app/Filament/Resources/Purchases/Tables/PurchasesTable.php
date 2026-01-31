@@ -14,10 +14,10 @@ class PurchasesTable
     {
         return $table
             ->columns([
-                TextColumn::make('warehouse_id')
+                TextColumn::make('warehouse.name')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('provider_id')
+                TextColumn::make('provider.name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('invoice_number')
@@ -31,8 +31,10 @@ class PurchasesTable
                 TextColumn::make('discount')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('remarks')
-                    ->searchable(),
+                TextColumn::make('net_total')
+                    ->label('Net Total')
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

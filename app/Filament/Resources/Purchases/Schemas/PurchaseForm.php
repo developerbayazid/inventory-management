@@ -40,7 +40,8 @@ class PurchaseForm
                                     ->components(CustomerResource::getCustomerSchema());
                                 }),
                         TextInput::make('invoice_number')
-                            ->required(),
+                            ->required()
+                            ->unique(ignoreRecord:true),
                         DatePicker::make('purchase_date')
                             ->required(),
 
@@ -82,7 +83,7 @@ class PurchaseForm
                                             ->numeric()
                                             ->default(1.0)
                                             ->reactive()
-                                           ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire)),
+                                            ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire)),
                                         TextInput::make('total')
                                             ->required()
                                             ->numeric()
@@ -92,16 +93,14 @@ class PurchaseForm
 
                                     ]),
 
-
                     ]),
 
                     Section::make()
                         ->heading('Total Details')
                         ->columns(3)
                         ->components([
-                            TextInput::make('total_amount')
+                            TextInput::make('total')
                                 ->required()
-                                ->disabled()
                                 ->label('Sub Total'),
                             TextInput::make('discount')
                                 ->required()
@@ -109,14 +108,9 @@ class PurchaseForm
                                 ->default(0)
                                 ->prefix('$')
                                 ->reactive()
-                                ->afterStateUpdated(function($get, $set){
-                                    $sub_total = $get('total_amount') ?? 0;
-                                    $discount  = $get('discount') ?? 0;
-                                    $set('net_total', $sub_total - $discount);
-                                }),
+                                ->afterStateUpdated(fn(Livewire $livewire) => PurchaseResource::updateFormData($livewire)),
                             TextInput::make('net_total')
                                 ->label('Total')
-                                ->disabled()
                                 ->required(),
                         ])
 
