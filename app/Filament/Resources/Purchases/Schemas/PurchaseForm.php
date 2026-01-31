@@ -48,7 +48,7 @@ class PurchaseForm
                     ]),
                 Section::make('Product Details')
                         ->components([
-                            Repeater::make('product')
+                            Repeater::make('products')
                                 ->label('Products')
                                 ->columns(4)
                                 ->cloneable()

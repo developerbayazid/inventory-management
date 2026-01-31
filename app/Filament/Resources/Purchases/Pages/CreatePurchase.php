@@ -11,6 +11,27 @@ class CreatePurchase extends CreateRecord
 {
     protected static string $resource = PurchaseResource::class;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        // 🔥 Prevent auto-save
+        unset($data['product']);
+
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        // Load products from the relationship
+        $data['products'] = $this->record->products->map(fn($p) => [
+            'product_id' => $p->product_id,
+            'price'      => $p->price,
+            'quantity'   => $p->quantity,
+            'total'      => $p->price * $p->quantity,
+        ])->toArray();
+
+        return $data;
+    }
+
     public function handleRecordCreation(array $data): Model
     {
         $purchase = Purchase::create([
@@ -22,7 +43,7 @@ class CreatePurchase extends CreateRecord
             'discount'       => $data['discount'],
         ]);
 
-        $products = $data['product'];
+        $products = $data['products'] ?? [];
 
         foreach ($products as $product) {
             $purchase->products()->create([

@@ -39,7 +39,7 @@ class PurchaseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ProductsRelationManager::make()
+            //
         ];
     }
 
@@ -55,7 +55,7 @@ class PurchaseResource extends Resource
     public static function updateFormData($livewire)
     {
 
-        $products = $livewire->data['product'];
+        $products = $livewire->data['products'];
 
         $grandTotal = 0;
 
@@ -68,7 +68,7 @@ class PurchaseResource extends Resource
             $products[$key] = $product;
         }
 
-        $livewire->data['product'] = $products;
+        $livewire->data['products'] = $products;
         $livewire->data['total'] = $grandTotal;
         $discount = $livewire->data['discount'] ?? 0;
         $netTotal = $grandTotal - $discount;
