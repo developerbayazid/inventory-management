@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use App\Filament\Resources\Purchases\PurchaseResource;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -53,6 +54,7 @@ class PurchasesTable
                 Action::make('make_invoice')
                     ->label('View Invoice')
                     ->icon('heroicon-o-document')
+                    ->url(fn ($record) => PurchaseResource::getUrl('invoice', ['record' => $record]))
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
