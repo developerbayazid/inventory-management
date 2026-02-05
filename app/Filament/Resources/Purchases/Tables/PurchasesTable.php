@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -49,6 +50,9 @@ class PurchasesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('make_invoice')
+                    ->label('View Invoice')
+                    ->icon('heroicon-o-document')
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
