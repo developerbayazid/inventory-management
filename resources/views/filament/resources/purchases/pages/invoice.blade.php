@@ -1,13 +1,10 @@
 <x-filament-panels::page>
 
 
-
-
 <style>
 
         .invoice-container {
-            max-width: 900px;
-            margin: auto;
+            max-width: 100%;
             background: #ffffff;
             padding: 30px;
             border-radius: 8px;
@@ -46,7 +43,7 @@
         }
 
         table thead {
-            background: #2c3e50;
+            background: #27272A;
             color: #fff;
         }
 
@@ -91,7 +88,7 @@
     <div class="invoice-header">
         <div>
             <h1>Purchase Invoice</h1>
-            <p>Invoice No: INV-001</p>
+            <p>Invoice No: {{ $purchase->invoice_number }}</p>
         </div>
 
         <div class="company-details">
@@ -105,14 +102,15 @@
     <div class="invoice-info">
         <div>
             <strong>Supplier</strong><br>
-            ABC Supplier Ltd<br>
-            supplier@email.com<br>
-            +880 1XXXXXXXXX
+            {{ $purchase->provider->name }}<br>
+            {{ $purchase->provider->address }}<br>
+            {{ $purchase->provider->email }}<br>
+            {{ $purchase->provider->phone }}
         </div>
 
         <div>
             <strong>Date</strong><br>
-            01 February 2026
+            {{ $purchase->purchase_date }}
         </div>
     </div>
 
@@ -128,20 +126,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Product A</td>
-                <td class="text-right">100.00</td>
-                <td class="text-right">2</td>
-                <td class="text-right">200.00</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Product B</td>
-                <td class="text-right">50.00</td>
-                <td class="text-right">1</td>
-                <td class="text-right">50.00</td>
-            </tr>
+
+            @foreach ($purchase->products as $product)
+                <tr>
+                    <td>{{ $product->id }}</td>
+                    <td>{{ $product->product->name }}</td>
+                    <td class="text-right">${{ $product->price }}</td>
+                    <td class="text-right">{{ $product->quantity }}</td>
+                    <td class="text-right">${{ $product->price * $product->quantity }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
@@ -150,15 +144,15 @@
         <table>
             <tr>
                 <td>Sub Total</td>
-                <td class="text-right">250.00</td>
+                <td class="text-right">${{ $purchase->total }}</td>
             </tr>
             <tr>
                 <td>Discount</td>
-                <td class="text-right">0.00</td>
+                <td class="text-right">${{ $purchase->discount }}</td>
             </tr>
             <tr>
-                <td>Net Total</td>
-                <td class="text-right">250.00</td>
+                <td>Total</td>
+                <td class="text-right">${{ $purchase->net_total }}</td>
             </tr>
         </table>
     </div>
