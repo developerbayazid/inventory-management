@@ -31,6 +31,7 @@ class Invoice extends Page
                 ->label('Print')
                 ->icon('heroicon-o-printer')
                 ->requiresConfirmation()
+                ->url(route('print.purchase-invoice', ['record' => $this->record]))
         ];
     }
 }
