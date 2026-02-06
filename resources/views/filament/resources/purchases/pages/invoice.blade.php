@@ -1,97 +1,15 @@
 <x-filament-panels::page>
 
-
-<style>
-
-        .invoice-container {
-            max-width: 100%;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-        }
-
-        .invoice-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-        }
-
-        .invoice-header h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #2c3e50;
-        }
-
-        .company-details {
-            text-align: right;
-            font-size: 14px;
-        }
-
-        .invoice-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            font-size: 14px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        table thead {
-            background: #27272A;
-            color: #fff;
-        }
-
-        table th,
-        table td {
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            font-size: 13px;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .totals {
-            margin-top: 30px;
-            width: 40%;
-            margin-left: auto;
-        }
-
-        .totals table td {
-            padding: 8px 12px;
-        }
-
-        .totals tr:last-child td {
-            font-weight: bold;
-            border-top: 2px solid #333;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
-        }
-
-    </style>
-
-<div class="invoice-container">
+<div style="max-width: 100%;background: #ffffff;padding: 30px;border-radius: 8px;" class="invoice-container">
 
     <!-- HEADER -->
-    <div class="invoice-header">
+    <div style="display: flex;justify-content: space-between;align-items: center;border-bottom: 2px solid #eee;padding-bottom: 20px;" class="invoice-header">
         <div>
-            <h1>Purchase Invoice</h1>
+            <h1 style="margin: 0;font-size: 28px;color: #2c3e50;">Purchase Invoice</h1>
             <p>Invoice No: {{ $purchase->invoice_number }}</p>
         </div>
 
-        <div class="company-details">
+        <div style=" text-align: right;font-size: 14px;" class="company-details">
             <strong>Your Company Name</strong><br>
             Dhaka, Bangladesh<br>
             Phone: +880 1XXXXXXXXX
@@ -99,7 +17,7 @@
     </div>
 
     <!-- INFO -->
-    <div class="invoice-info">
+    <div style="display: flex;justify-content: space-between;margin-top: 30px;font-size: 14px;" class="invoice-info">
         <div>
             <strong>Supplier</strong><br>
             {{ $purchase->provider->name }}<br>
@@ -115,50 +33,50 @@
     </div>
 
     <!-- PRODUCT TABLE -->
-    <table>
-        <thead>
+    <table style="width: 100%;border-collapse: collapse;margin-top: 30px;">
+        <thead style=" background: #27272A;color: #fff;">
             <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th class="text-right">Price</th>
-                <th class="text-right">Quantity</th>
-                <th class="text-right">Total</th>
+                <th style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;">#</th>
+                <th style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;">Product</th>
+                <th style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">Price</th>
+                <th style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">Quantity</th>
+                <th style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">Total</th>
             </tr>
         </thead>
         <tbody>
 
             @foreach ($purchase->products as $product)
                 <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->product->name }}</td>
-                    <td class="text-right">${{ $product->price }}</td>
-                    <td class="text-right">{{ $product->quantity }}</td>
-                    <td class="text-right">${{ $product->price * $product->quantity }}</td>
+                    <td style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;">{{ $product->id }}</td>
+                    <td style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;">{{ $product->product->name }}</td>
+                    <td style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">${{ $product->price }}</td>
+                    <td style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">{{ $product->quantity }}</td>
+                    <td style="padding: 12px;border: 1px solid #e0e0e0;font-size: 13px;text-align: right;" class="text-right">${{ $product->price * $product->quantity }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
     <!-- TOTALS -->
-    <div class="totals">
-        <table>
+    <div style="margin-top: 30px;width: 40%;margin-left: auto;" class="totals">
+        <table style="width: 100%;border-collapse: collapse;margin-top: 30px;">
             <tr>
-                <td>Sub Total</td>
-                <td class="text-right">${{ $purchase->total }}</td>
+                <td style="text-align: right;padding: 8px 12px;">Sub Total</td>
+                <td style="text-align: right; padding: 8px 12px; font-weight: bold;border-top: 2px solid #333;" class="text-right">${{ $purchase->total }}</td>
             </tr>
             <tr>
-                <td>Discount</td>
-                <td class="text-right">${{ $purchase->discount }}</td>
+                <td style="text-align: right;padding: 8px 12px;">Discount</td>
+                <td style="text-align: right;padding: 8px 12px; font-weight: bold;border-top: 2px solid #333;" class="text-right">${{ $purchase->discount }}</td>
             </tr>
             <tr>
-                <td>Total</td>
-                <td class="text-right">${{ $purchase->net_total }}</td>
+                <td style="text-align: right;padding: 8px 12px;">Total</td>
+                <td style="text-align: right;padding: 8px 12px; font-weight: bold;border-top: 2px solid #333;" class="text-right">${{ $purchase->net_total }}</td>
             </tr>
         </table>
     </div>
 
     <!-- FOOTER -->
-    <div class="footer">
+    <div style="margin-top: 40px;text-align: center;font-size: 12px;color: #777;" class="footer">
         This is a system generated invoice.<br>
         Thank you for your business.
     </div>

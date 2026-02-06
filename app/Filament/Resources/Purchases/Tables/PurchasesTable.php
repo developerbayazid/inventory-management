@@ -27,14 +27,8 @@ class PurchasesTable
                 TextColumn::make('purchase_date')
                     ->date()
                     ->sortable(),
-                TextColumn::make('total')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('discount')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('net_total')
-                    ->label('Net Total')
+                    ->label('Total')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
